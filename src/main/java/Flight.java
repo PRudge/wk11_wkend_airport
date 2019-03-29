@@ -13,6 +13,12 @@ public class Flight{
 
     }
 
+//    public Flight(String flightNum, String destination ) {
+//        this.flightNum = flightNum;
+//        this.destination = destination;
+//
+//    }
+
     public Plane getPlane(){
         return this.plane;
     }
@@ -23,6 +29,12 @@ public class Flight{
 
     public String getDestination() {
         return this.destination;
+    }
+
+
+
+    public void setPlane(Plane plane){
+        this.plane = plane;
     }
 }
 

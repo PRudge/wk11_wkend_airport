@@ -8,21 +8,17 @@ public class Airport {
     private ArrayList<Flight> flights;
     private ArrayList<Ticket> tickets;
 
-    private Plane plane;
-    private Passenger passenger;
-    private Flight flight;
-    private Ticket ticket;
+    private HashMap<String, Integer> passengerTrackingHashMap;
 
     private AirportNames name;
 
     public Airport(AirportNames name){
+        this.passengerTrackingHashMap = new HashMap<>();
         this.hangars =  new ArrayList<>();
         this.flights = new ArrayList<>();
         this.tickets = new ArrayList<>();
         this.name = name;
-        this.passenger = new Passenger("John", "Smith");
-        this.ticket = new Ticket(45, passenger, "ez200", "Rome");
-    }
+}
 
     public AirportNames getName() {
         return this.name;
@@ -38,7 +34,7 @@ public class Airport {
     }
 
     public Flight createFlight(Plane plane, String flightNum, String destination){
-        flight = new Flight(plane, flightNum, destination);
+        Flight flight = new Flight(plane, flightNum, destination);
         return flight;
     }
 
@@ -46,8 +42,10 @@ public class Airport {
         flights.add(flight);
     }
 
-    public void createTickets(Flight flight){
+    public void createTickets(Flight flight, int price){
         Plane plane = flight.getPlane();
+        Ticket ticket = new Ticket(price, flight.getFlightNum(),flight.getDestination());
+
         int numTickets = plane.getValueFromType();
         for (int i = 0; i < numTickets; i++){
             this.tickets.add(ticket);
@@ -59,19 +57,21 @@ public class Airport {
     }
 
     public void sellTickets(){
-        if (this.tickets.size() > 0){
+        if (this.tickets.size() > 0){ // doesn't sell tickets when they are all booked
             tickets.remove(0);
         }
     }
 
 
-    public void trackPassengers(String flightNum, int numPassengers){
-        Map<String, Integer> passengerTracking = new HashMap<>();
-        passengerTracking.put(flightNum, numPassengers);
+    public HashMap<String, Integer> trackPassengers(String flightNum, int numPassengers) {
+
+
+        this.passengerTrackingHashMap.put(flightNum, numPassengers);
+
+        return this.passengerTrackingHashMap;
     }
 
-//    public void trackPassengersSize(){
-//        passengerTracking.size();
-//    }
+
+
 
 }

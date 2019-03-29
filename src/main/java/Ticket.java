@@ -14,6 +14,13 @@ public class Ticket{
         this.passenger = passenger;
     }
 
+    public Ticket(int price, String flightNum,  String destination){
+        price = price;
+        this.flightNum = flightNum;
+        this.destination = destination;
+    }
+
+
 
     public int getPrice(){
         return this.price;
