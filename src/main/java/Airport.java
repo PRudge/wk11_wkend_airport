@@ -60,11 +60,13 @@ public class Airport {
         return this.tickets.size();
     }
 
-    public void sellTickets(){
-        if (this.tickets.size() > 0){ // doesn't sell tickets when they are all booked
+    public Ticket sellTickets(){
+        Ticket nullTicket = new Ticket();
+        if (this.tickets.size() > 0) { // doesn't sell tickets when they are all booked
 
-            tickets.remove(0);
-        }
+            return tickets.remove(0);
+      }
+        return nullTicket;
     }
 
 

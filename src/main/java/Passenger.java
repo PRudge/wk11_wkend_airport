@@ -1,11 +1,18 @@
 public class Passenger {
     private String firstName;
     private String lastName;
+    private Ticket ticket;
+
+    public Passenger(String firstName, String lastName, Ticket ticket){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.ticket = ticket;
+
+    }
 
     public Passenger(String firstName, String lastName){
         this.firstName = firstName;
         this.lastName = lastName;
-
     }
 
 
@@ -32,9 +39,10 @@ public class Passenger {
         // buy a ticket for a flight
         Ticket ticket = new Ticket();
         return ticket;
+    }
 
-
-
+    public void setTicket(Ticket ticket){
+        this.ticket = ticket;
     }
 
 

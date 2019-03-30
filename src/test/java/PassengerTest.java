@@ -34,6 +34,14 @@ public class PassengerTest {
         assertEquals("Smith", passenger.getLastName());
     }
 
+    @Test
+    public void canSetTicket(){
+        Ticket ticket;
+        ticket = new Ticket(45, "EZ100", Destination.MALAGA);
+        assertEquals(Destination.MALAGA, ticket.getDestination());
+        assertEquals("EZ100", ticket.getFlightNum());
+    }
+
 
 
 

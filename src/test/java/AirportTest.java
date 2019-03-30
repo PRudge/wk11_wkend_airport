@@ -160,8 +160,8 @@ public class AirportTest {
         assertEquals(1, airport.countTickets());
         airport.sellTickets();
         assertEquals(0, airport.countTickets()); // zero fully booked
-        airport.sellTickets();
-        assertEquals(0, airport.countTickets());
+        Ticket ticket = airport.sellTickets(); // no tickets left
+        assertEquals(null, ticket.getFlightNum());
     }
 
     @Test
