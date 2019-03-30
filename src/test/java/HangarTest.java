@@ -2,6 +2,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.theories.suppliers.TestedOn;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 
 public class HangarTest {
@@ -14,7 +16,7 @@ public class HangarTest {
     @Before
     public void before() {
         hangar = new Hangar("Wilson");
-        plane1 = new Plane(Type.BOEING777, AirlineName.AIRCANADA );
+        plane1 = new Plane(Type.BOEING777, AirlineName.LUFTHANSA );
         plane2 = new Plane(Type.BOEING757, AirlineName.AIRCANADA );
         plane3 = new Plane(Type.BOEING747, AirlineName.AIRCANADA );
     }
@@ -29,6 +31,7 @@ public class HangarTest {
         assertEquals(0, hangar.countPlanes());
     }
 
+
     @Test
     public void canAddPlanes(){
         hangar.addPlane(plane1);
@@ -41,21 +44,52 @@ public class HangarTest {
         hangar.addPlane(plane1);
         hangar.addPlane(plane2);
         assertEquals(2, hangar.countPlanes());
-        hangar.removePlane();
+        hangar.removePlane(plane1);
         assertEquals(1, hangar.countPlanes());
     }
 
     @Test
-    public void canGetBackBestPlane(){
+    public void canGetPlanes(){
+        ArrayList<Plane> array;
+
+        hangar.addPlane(plane1);
+        hangar.addPlane(plane2);
+
+        array = hangar.getPlanes();
+        Plane plane = array.get(0);
+        assertEquals(Type.BOEING777, plane.getType());
+        assertEquals(AirlineName.LUFTHANSA, plane.getName());
+    }
+
+    @Test
+    public void canGetBackBestPlaneNoBrokenPlanes(){
         hangar.addPlane(plane1);
         hangar.addPlane(plane2);
         hangar.addPlane(plane3);
-        Plane bestPlane = hangar.findBestPlane(410);
+        Plane brokenPlane = new Plane(); //
+        Plane bestPlane = hangar.findBestPlane(293, brokenPlane);
         assertEquals(Type.BOEING747, bestPlane.getType());
 
-        bestPlane = hangar.findBestPlane(183);
+        bestPlane = hangar.findBestPlane(183, brokenPlane);
         assertEquals(Type.BOEING757, bestPlane.getType());
-        bestPlane = hangar.findBestPlane(430);
+
+        bestPlane = hangar.findBestPlane(430, brokenPlane);
+        assertEquals(Type.BOEING777, bestPlane.getType());
+    }
+
+    @Test
+    public void canGetBackBestPlaneBrokenPlane(){
+        hangar.addPlane(plane1);
+        hangar.addPlane(plane2);
+        hangar.addPlane(plane3);
+        Plane brokenPlane = plane2; // can't use plane2
+        Plane bestPlane = hangar.findBestPlane(293, brokenPlane);
+        assertEquals(Type.BOEING747, bestPlane.getType());
+
+        bestPlane = hangar.findBestPlane(183, brokenPlane);
+        assertEquals(Type.BOEING747, bestPlane.getType());
+
+        bestPlane = hangar.findBestPlane(430, brokenPlane);
         assertEquals(Type.BOEING777, bestPlane.getType());
     }
 }

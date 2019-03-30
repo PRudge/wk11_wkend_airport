@@ -9,44 +9,44 @@ public class Airport {
 
     private HashMap<String, Integer> passengerTrackingHashMap;
 
-    private Code name;
+    private Code code;
 
-    public Airport(Code name){
+    public Airport(Code code){
         this.passengerTrackingHashMap = new HashMap<>();
         this.hangars =  new ArrayList<>();
         this.flights = new ArrayList<>();
         this.tickets = new ArrayList<>();
-        this.name = name;
+        this.code = code;
 }
 
-    public Code getName() {
-        return this.name;
-    }
-
-    public Plane getPlane(Hangar hangar){
-        Plane plane = hangar.removePlane();
-        return plane;
-    }
-
-    public int countFlights(){
-
-        return flights.size();
+    public Code getCode() {
+        return this.code;
     }
 
 
-    public Flight createFlight(Plane plane, String flightNum, Destination destination, Hangar hangar){
+    public int countFlights(){ return flights.size(); }
 
+    public Flight createFlight(String flightNum, Destination destination, Hangar hangar){
+        // capacity of plane is the average for the destination, which is the value in destination enum
+        int capacity = destination.getValue();
+        Plane brokenPlane = new Plane(); // we won't have a broken plane first time through
+        // should be able to loop through all the hangars but it can't...
+        // for (Hangar hangar : this.hangars) {
+            Plane plane = hangar.findBestPlane(capacity, brokenPlane);
+        //}
 
-        Flight flight = new Flight(plane, flightNum, destination);
-        return flight;
+        Flight newFlight = new Flight(plane, flightNum, destination); // set up the new flight with plane
+        hangar.removePlane(plane); //remove the plane from the hangar
+        return newFlight;
     }
+
 
     public void addFlight(Flight flight){
-
         flights.add(flight);
     }
 
     public void createTickets(Flight flight, int price){
+        //  Type holds the plane capacity, this is number of tickets created to sell
         Plane plane = flight.getPlane();
         Ticket ticket = new Ticket(price, flight.getFlightNum(),flight.getDestination());
 

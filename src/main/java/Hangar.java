@@ -24,22 +24,17 @@ public class Hangar {
         planes.add(plane);
     }
 
-
-//    public void removePlane(Plane plane){
-//
-//        return this.planes.remove(0);
-//        this.planes.remove(plane);
-//    }
-
-    public Plane removePlane(){
-
-        return this.planes.remove(0);
+    public ArrayList<Plane> getPlanes(){
+        return new ArrayList<>(this.planes);
     }
 
-    public Plane findBestPlane(int capacity) {
-        int x = 0;
-        int justAbove = Integer.MAX_VALUE;
 
+    public void removePlane(Plane plane){
+        this.planes.remove(plane);
+    }
+
+
+    public Plane findBestPlane(int capacity, Plane brokenPlane) {
 
         ArrayList<Plane> suitablePlanes;
         suitablePlanes = new ArrayList<>();
@@ -47,12 +42,14 @@ public class Hangar {
         Plane bestPlane = new Plane();
 
         for (Plane plane : this.planes) {
-            if (plane.getValueFromType() >= capacity) {
-                suitablePlanes.add(plane);
+            if (plane != brokenPlane) {
+                if (plane.getValueFromType() >= capacity) {
+                    suitablePlanes.add(plane);
+                }
+                bestPlane = getBestPlane(suitablePlanes);
             }
-            bestPlane = getBestPlane(suitablePlanes);
-
         }
+
         return bestPlane;
 
     }

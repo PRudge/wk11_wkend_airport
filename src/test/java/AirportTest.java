@@ -18,12 +18,6 @@ public class AirportTest {
 
     private Flight flight;
 
-    private Flight flight1;
-//    private Flight flight2;
-//    private Flight flight3;
-
-
-
     @Before
     public void before() {
         airport = new Airport(Code.GLA);
@@ -32,10 +26,10 @@ public class AirportTest {
         hangar2 = new Hangar("MacMillan");
         hangar3 = new Hangar("Thatcher");
 
-        plane1 = new Plane(Type.A380, AirlineName.AIRCANADA );
+        plane1 = new Plane(Type.A330, AirlineName.AIRCANADA );
         plane2 = new Plane(Type.BOEING757, AirlineName.DELTAAIRLINES);
-        plane3 = new Plane(Type.A380, AirlineName.LUFTHANSA);
-        plane4 = new Plane(Type.A330, AirlineName.LUFTHANSA);
+        plane3 = new Plane(Type.BOEING777, AirlineName.LUFTHANSA);
+        plane4 = new Plane(Type.A380, AirlineName.LUFTHANSA);
 
 
         Passenger passenger1 = new Passenger("John", "Smith");
@@ -54,45 +48,76 @@ public class AirportTest {
             plane3.addPassenger(passenger3);
         }
 
-
         hangar1.addPlane(plane1);
         hangar1.addPlane(plane2);
         hangar1.addPlane(plane3);
-
-
         hangar2.addPlane(plane1);
         hangar2.addPlane(plane2);
-
         hangar3.addPlane(plane4);
 
-        flight1 = new Flight (plane1, "AC101",Destination.ABERDEEN);
-
+//        airport.addHangar(hangar1);
+//        airport.addHangar(hangar2);
+//        airport.addHangar(hangar3);
     }
 
     @Test
-    public void canGetName(){
-        assertEquals(Code.GLA, airport.getName());
+    public void canGetAirportCodeName(){
 
-    }
 
-    @Test
-    public void canGetPlane(){
-        Plane plane = airport.getPlane(hangar1);
-        assertEquals(2, hangar1.countPlanes());
+        assertEquals(Code.GLA, airport.getCode());
+
     }
 
     @Test
     public void canCountFlights(){
+
         assertEquals(0, airport.countFlights());
     }
 
     @Test
     public void canCreateFlight(){ // this assigns a plane to the flight
-        Plane plane = airport.getPlane(hangar1);
-        Flight newFlight = airport.createFlight(plane, "EZ100", Destination.ABERDEEN, hangar1);
+
+        // createFlight assigns a plane
+        Flight newFlight = airport.createFlight("EZ100", Destination.MALAGA, hangar1);
         assertEquals("EZ100", newFlight.getFlightNum());
 
+        Plane plane = newFlight.getPlane();
+
+        assertEquals(Type.A330, plane.getType() );
+        assertEquals(AirlineName.AIRCANADA, plane.getName());
     }
+
+    @Test
+    public void canGetNewPlane(){ // this assigns a plane to the flight
+
+        Flight flight = new Flight(plane1,"EZ100", Destination.MALAGA);
+        Plane brokenPlane = plane1; // replace plane
+        int capacity = flight.avCapForFlight(); // get average capacity for MALAGA flight;
+
+        Plane replacementPlane = hangar1.findBestPlane(capacity, brokenPlane);
+
+        assertEquals(Type.BOEING777, replacementPlane.getType() );
+        assertEquals(AirlineName.LUFTHANSA, replacementPlane.getName());
+
+    }
+
+    @Test
+    public void canAmendFlight(){
+        Flight flight = new Flight(plane1,"EZ100", Destination.MALAGA);
+        Plane brokenPlane = plane1; // replace plane
+        int capacity = flight.avCapForFlight(); // get average capacity for MALAGA flight;
+
+        Plane replacementPlane = hangar1.findBestPlane(capacity, brokenPlane);
+
+        // assign new plane to flight
+        flight.setPlane(replacementPlane);
+
+        Plane newPlane = flight.getPlane();
+
+        assertEquals(Type.BOEING777, newPlane.getType() );
+        assertEquals(AirlineName.LUFTHANSA, newPlane.getName());
+    }
+
 
     @Test
     public void canAddFlight(){
@@ -116,21 +141,19 @@ public class AirportTest {
         assertEquals(3, airport.countHangars());
     }
 
-
-
     @Test
     public void canGenerateTickets() {
         Flight newFlight;
 
-        newFlight = new Flight(plane1, "EZ100", Destination.ABERDEEN);
-        newFlight.setPlane(plane1);
+        newFlight = new Flight(plane4, "EZ100", Destination.ABERDEEN);
+        newFlight.setPlane(plane4);
         airport.createTickets(newFlight, 45);
         assertEquals(2, airport.countTickets());
     }
 
     @Test
     public void canSellTickets(){
-        Flight newFlight = new Flight(plane1, "EZ100", Destination.ABERDEEN);
+        Flight newFlight = new Flight(plane4, "EZ100", Destination.ABERDEEN);
         airport.createTickets(newFlight, 45);
         airport.sellTickets();
         assertEquals(1, airport.countTickets());
