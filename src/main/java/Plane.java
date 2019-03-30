@@ -12,6 +12,11 @@ public class Plane {
         this.passengers = new ArrayList<>();
     }
 
+    public Plane() {
+
+    }
+
+
     public Type getType(){
         return this.type;
     }
@@ -33,6 +38,7 @@ public class Plane {
     }
 
     public void addPassenger(Passenger passenger){
+
         this.passengers.add(passenger);
     }
 

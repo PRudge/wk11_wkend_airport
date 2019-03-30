@@ -1,7 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
@@ -15,6 +14,7 @@ public class AirportTest {
     private Plane plane1;
     private Plane plane2;
     private Plane plane3;
+    private Plane plane4;
 
     private Flight flight;
 
@@ -26,7 +26,7 @@ public class AirportTest {
 
     @Before
     public void before() {
-        airport = new Airport(AirportNames.GLA);
+        airport = new Airport(Code.GLA);
 
         hangar1 = new Hangar("Wilson");
         hangar2 = new Hangar("MacMillan");
@@ -35,6 +35,8 @@ public class AirportTest {
         plane1 = new Plane(Type.A380, AirlineName.AIRCANADA );
         plane2 = new Plane(Type.BOEING757, AirlineName.DELTAAIRLINES);
         plane3 = new Plane(Type.A380, AirlineName.LUFTHANSA);
+        plane4 = new Plane(Type.A330, AirlineName.LUFTHANSA);
+
 
         Passenger passenger1 = new Passenger("John", "Smith");
         Passenger passenger2 = new Passenger("Jane", "Jones");
@@ -42,6 +44,10 @@ public class AirportTest {
 
         for(int i = 0; i < 10; i++) {
             plane1.addPassenger(passenger1);
+        }
+
+        for(int i = 0; i < 200; i++) {
+            plane2.addPassenger(passenger2);
         }
 
         for(int i = 0; i < 50; i++) {
@@ -54,13 +60,18 @@ public class AirportTest {
         hangar1.addPlane(plane3);
 
 
-        flight1 = new Flight (plane1, "AC101", "Rome");
+        hangar2.addPlane(plane1);
+        hangar2.addPlane(plane2);
+
+        hangar3.addPlane(plane4);
+
+        flight1 = new Flight (plane1, "AC101",Destination.ABERDEEN);
 
     }
 
     @Test
     public void canGetName(){
-        assertEquals(AirportNames.GLA, airport.getName());
+        assertEquals(Code.GLA, airport.getName());
 
     }
 
@@ -78,28 +89,48 @@ public class AirportTest {
     @Test
     public void canCreateFlight(){ // this assigns a plane to the flight
         Plane plane = airport.getPlane(hangar1);
-        Flight newFlight = airport.createFlight(plane,"EZ100", "Inverness");
+        Flight newFlight = airport.createFlight(plane, "EZ100", Destination.ABERDEEN, hangar1);
         assertEquals("EZ100", newFlight.getFlightNum());
 
     }
 
     @Test
     public void canAddFlight(){
-        Flight newFlight =  airport.createFlight(plane1, "EZ100", "Inverness");
+        Flight newFlight =  new Flight(plane1, "EZ100", Destination.ABERDEEN);
         airport.addFlight(newFlight);
         assertEquals(1, airport.countFlights() );
     }
 
     @Test
+    public void canCountHangars(){
+        assertEquals(0, airport.countHangars());
+    }
+
+    @Test
+    public void canAddHangar(){
+        airport.addHangar(hangar1);
+        assertEquals(1, airport.countHangars());
+        airport.addHangar(hangar2);
+        assertEquals(2, airport.countHangars());
+        airport.addHangar(hangar3);
+        assertEquals(3, airport.countHangars());
+    }
+
+
+
+    @Test
     public void canGenerateTickets() {
-        Flight newFlight = airport.createFlight(plane1, "EZ100", "Inverness");
+        Flight newFlight;
+
+        newFlight = new Flight(plane1, "EZ100", Destination.ABERDEEN);
+        newFlight.setPlane(plane1);
         airport.createTickets(newFlight, 45);
         assertEquals(2, airport.countTickets());
     }
 
     @Test
     public void canSellTickets(){
-        Flight newFlight = airport.createFlight(plane1, "EZ100", "Inverness");
+        Flight newFlight = new Flight(plane1, "EZ100", Destination.ABERDEEN);
         airport.createTickets(newFlight, 45);
         airport.sellTickets();
         assertEquals(1, airport.countTickets());
@@ -111,14 +142,14 @@ public class AirportTest {
 
     @Test
     public void canFindNumberOfPeopleOnFlight(){
-        Flight newFlight = airport.createFlight(plane1, "EZ100", "Inverness");
+        Flight newFlight = new Flight(plane1, "EZ100", Destination.ABERDEEN);
         int numPassenger = newFlight.getPlane().getPassengerCount();
         assertEquals(10, numPassenger);
     }
 
     @Test
     public void canKeepTrackOfPeopleOnFlights(){
-        Flight newFlight = airport.createFlight(plane1, "EZ100", "Inverness");
+        Flight newFlight = new Flight(plane1, "EZ100", Destination.ABERDEEN);
         int numPassenger = newFlight.getPlane().getPassengerCount();
 
         HashMap<String, Integer> passengersOnFlightsCounts = airport.trackPassengers(newFlight.getFlightNum(), numPassenger);
@@ -126,7 +157,7 @@ public class AirportTest {
         assertEquals(10, flightEZ100count);
 
 
-        newFlight = airport.createFlight(plane3, "AC99", "Dublin");
+        newFlight = new Flight(plane3, "AC99", Destination.ABERDEEN);
         numPassenger = newFlight.getPlane().getPassengerCount();
 
         passengersOnFlightsCounts = airport.trackPassengers(newFlight.getFlightNum(), numPassenger);

@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Airport {
 
@@ -10,9 +9,9 @@ public class Airport {
 
     private HashMap<String, Integer> passengerTrackingHashMap;
 
-    private AirportNames name;
+    private Code name;
 
-    public Airport(AirportNames name){
+    public Airport(Code name){
         this.passengerTrackingHashMap = new HashMap<>();
         this.hangars =  new ArrayList<>();
         this.flights = new ArrayList<>();
@@ -20,7 +19,7 @@ public class Airport {
         this.name = name;
 }
 
-    public AirportNames getName() {
+    public Code getName() {
         return this.name;
     }
 
@@ -30,15 +29,20 @@ public class Airport {
     }
 
     public int countFlights(){
+
         return flights.size();
     }
 
-    public Flight createFlight(Plane plane, String flightNum, String destination){
+
+    public Flight createFlight(Plane plane, String flightNum, Destination destination, Hangar hangar){
+
+
         Flight flight = new Flight(plane, flightNum, destination);
         return flight;
     }
 
     public void addFlight(Flight flight){
+
         flights.add(flight);
     }
 
@@ -69,6 +73,15 @@ public class Airport {
         this.passengerTrackingHashMap.put(flightNum, numPassengers);
 
         return this.passengerTrackingHashMap;
+    }
+
+    public int countHangars(){
+        return hangars.size();
+    }
+
+    public void addHangar(Hangar hangar){
+        this.hangars.add(hangar);
+
     }
 
 

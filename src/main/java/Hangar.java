@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class Hangar {
     private String name;
@@ -22,11 +24,58 @@ public class Hangar {
         planes.add(plane);
     }
 
+
+//    public void removePlane(Plane plane){
+//
+//        return this.planes.remove(0);
+//        this.planes.remove(plane);
+//    }
+
     public Plane removePlane(){
+
         return this.planes.remove(0);
+    }
+
+    public Plane findBestPlane(int capacity) {
+        int x = 0;
+        int justAbove = Integer.MAX_VALUE;
+
+
+        ArrayList<Plane> suitablePlanes;
+        suitablePlanes = new ArrayList<>();
+
+        Plane bestPlane = new Plane();
+
+        for (Plane plane : this.planes) {
+            if (plane.getValueFromType() >= capacity) {
+                suitablePlanes.add(plane);
+            }
+            bestPlane = getBestPlane(suitablePlanes);
+
+        }
+        return bestPlane;
+
+    }
+
+    public Plane getBestPlane(ArrayList<Plane> suitablePlanes) {
+        Plane bestPlane;
+        bestPlane = new Plane();
+        int minVal = Integer.MAX_VALUE;
+
+        for (Plane plane : suitablePlanes){
+            if (plane.getValueFromType() < minVal){
+                bestPlane = plane;
+                minVal = plane.getValueFromType();
+            }
+        }
+        return bestPlane;
     }
 
 
 
 }
+
+
+
+
 

@@ -12,7 +12,7 @@ public class FlightTest {
     @Before
     public void before(){
         plane = new Plane(Type.BOEING757, AirlineName.AMERICANAIRLINES);
-        flight = new Flight(plane, "AC101", "Rome");
+        flight = new Flight(plane, "AC101", Destination.LONDON);
     }
 
     @Test
@@ -23,14 +23,22 @@ public class FlightTest {
     }
 
     @Test
+    public void canGetFlightCapForFLight(){
+        int cap = flight.avCapForFlight();
+        assertEquals(200, cap);
+
+    }
+
+    @Test
     public void canGetFlightNum(){
         assertEquals("AC101", flight.getFlightNum());
     }
 
     @Test
     public void canGetDestinatiion(){
-        assertEquals("Rome", flight.getDestination());
+        assertEquals(Destination.LONDON, flight.getDestination());
     }
+
 
     @Test
     public void canSetPlane(){

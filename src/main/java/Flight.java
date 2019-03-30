@@ -2,22 +2,22 @@ public class Flight{
 
     private Plane plane;
     private String flightNum;
-    private String destination;
+    private Destination destination;
 
 
 
-    public Flight(Plane plane, String flightNum, String destination ) {
+    public Flight(Plane plane, String flightNum, Destination destination ) {
         this.plane = plane;
         this.flightNum = flightNum;
         this.destination = destination;
 
     }
 
-//    public Flight(String flightNum, String destination ) {
-//        this.flightNum = flightNum;
-//        this.destination = destination;
-//
-//    }
+    public Flight(String flightNum, Destination destination ) {
+        this.flightNum = flightNum;
+        this.destination = destination;
+
+    }
 
     public Plane getPlane(){
         return this.plane;
@@ -27,9 +27,15 @@ public class Flight{
         return this.flightNum;
     }
 
-    public String getDestination() {
+    public Destination getDestination() {
         return this.destination;
     }
+
+    public int avCapForFlight(){
+        return this.destination.getValue();
+    }
+
+
 
 
 
