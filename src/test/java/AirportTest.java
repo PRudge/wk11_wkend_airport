@@ -156,6 +156,7 @@ public class AirportTest {
         Flight newFlight = new Flight(plane4, "EZ100", Destination.ABERDEEN);
         airport.createTickets(newFlight, 45);
         airport.sellTickets();
+        // add a passenger to the flight with a ticket
         assertEquals(1, airport.countTickets());
         airport.sellTickets();
         assertEquals(0, airport.countTickets()); // zero fully booked

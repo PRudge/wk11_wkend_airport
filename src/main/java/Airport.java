@@ -62,6 +62,7 @@ public class Airport {
 
     public void sellTickets(){
         if (this.tickets.size() > 0){ // doesn't sell tickets when they are all booked
+
             tickets.remove(0);
         }
     }

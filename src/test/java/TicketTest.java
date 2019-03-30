@@ -10,22 +10,23 @@ public class TicketTest {
 
     @Before
     public void before() {
-        passenger = new Passenger("Paul", "Rudge");
+//        passenger = new Passenger("Paul", "Rudge");
 
-        ticket = new Ticket(45, passenger, "EZ100", Destination.ABERDEEN);
+        ticket = new Ticket(45,"EZ100", Destination.ABERDEEN);
     }
 
     @Test
     public void canGetPrice() {
+
         assertEquals(45, ticket.getPrice());
     }
 
-    @Test
-    public void canGetPassenger(){
-        Passenger passenger = ticket.getPassenger();
-        assertEquals("Paul", passenger.getFirstName());
-        assertEquals("Rudge", passenger.getLastName());
-    }
+//    @Test
+//    public void canGetPassenger(){
+//        Passenger passenger = ticket.getPassenger();
+//        assertEquals("Paul", passenger.getFirstName());
+//        assertEquals("Rudge", passenger.getLastName());
+//    }
 
 
     @Test

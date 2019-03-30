@@ -8,6 +8,7 @@ public class Passenger {
 
     }
 
+
     public String getFirstName() {
         return this.firstName;
     }
@@ -23,6 +24,20 @@ public class Passenger {
     public void setLastName(String name){
         this.lastName = name;
     }
+
+    public Ticket buyTicket(Flight flight){
+
+
+        //check tickets available
+        // buy a ticket for a flight
+        Ticket ticket = new Ticket();
+        return ticket;
+
+
+
+    }
+
+
 
 
 

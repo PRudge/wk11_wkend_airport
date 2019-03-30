@@ -7,19 +7,22 @@ public class Ticket{
     private String flightNum;
 
 
-    public Ticket(int price, Passenger passenger, String flightNum,  Destination destination){
+//    public Ticket(int price, Passenger passenger, String flightNum,  Destination destination){
+//        this.price = price;
+//        this.flightNum = flightNum;
+//        this.destination = destination;
+//        this.passenger = passenger;
+//    }
+
+    public Ticket(int price, String flightNum,  Destination destination){
         this.price = price;
         this.flightNum = flightNum;
         this.destination = destination;
-        this.passenger = passenger;
     }
 
-    public Ticket(int price, String flightNum,  Destination destination){
-        price = price;
-        this.flightNum = flightNum;
-        this.destination = destination;
-    }
+    public Ticket(){
 
+    }
 
 
     public int getPrice(){
@@ -34,9 +37,9 @@ public class Ticket{
         return this.destination;
     }
 
-    public Passenger getPassenger(){
-        return this.passenger;
-    }
+//    public Passenger getPassenger(){
+//        return this.passenger;
+//    }
 
 
 
