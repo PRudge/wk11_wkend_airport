@@ -13,11 +13,11 @@ public class Airport {
 
     public Airport(Code code){
 
+        this.code = code;
         this.hangars =  new ArrayList<>();
         this.flights = new ArrayList<>();
         this.tickets = new ArrayList<>();
         this.passengerTrackingHashMap = new HashMap<>();
-        this.code = code;
     }
 
     public Code getCode() {
@@ -27,10 +27,12 @@ public class Airport {
 
     public int countFlights(){ return flights.size(); }
 
+
+    // capacity of plane is the average for the destination, which is the value in destination enum
     public Flight createFlight(String flightNum, Destination destination, Hangar hangar){
-        // capacity of plane is the average for the destination, which is the value in destination enum
+
         int capacity = destination.getValue();
-        Plane brokenPlane = new Plane(); // we won't have a broken plane first time through
+        Plane brokenPlane = new Plane(); // no broken plane first time through
         // should be able to loop through all the hangars but it can't...
         // for (Hangar hangar : this.hangars) {
             Plane plane = hangar.findBestPlane(capacity, brokenPlane);

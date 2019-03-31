@@ -36,9 +36,6 @@ public class Hangar {
 
     public Plane findBestPlane(int capacity, Plane brokenPlane) {
 
-        ArrayList<Plane> suitablePlanes;
-        suitablePlanes = new ArrayList<>();
-
         Plane bestPlane = new Plane();
 
         int minVal = Integer.MAX_VALUE;
@@ -55,7 +52,7 @@ public class Hangar {
                 }
             }
         }
-
+//        this.removePlane(bestPlane);
         return bestPlane;
 
     }
