@@ -52,7 +52,7 @@ public class Hangar {
                 }
             }
         }
-//        this.removePlane(bestPlane);
+//        this.removePlane(bestPlane); why does this not work?
         return bestPlane;
 
     }

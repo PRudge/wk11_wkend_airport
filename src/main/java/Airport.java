@@ -33,7 +33,7 @@ public class Airport {
 
         int capacity = destination.getValue();
         Plane brokenPlane = new Plane(); // no broken plane first time through
-        // should be able to loop through all the hangars but it can't...
+
         // for (Hangar hangar : this.hangars) {
             Plane plane = hangar.findBestPlane(capacity, brokenPlane);
         //}
