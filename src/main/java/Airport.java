@@ -12,12 +12,13 @@ public class Airport {
     private Code code;
 
     public Airport(Code code){
-        this.passengerTrackingHashMap = new HashMap<>();
+
         this.hangars =  new ArrayList<>();
         this.flights = new ArrayList<>();
         this.tickets = new ArrayList<>();
+        this.passengerTrackingHashMap = new HashMap<>();
         this.code = code;
-}
+    }
 
     public Code getCode() {
         return this.code;

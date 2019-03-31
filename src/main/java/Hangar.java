@@ -41,35 +41,24 @@ public class Hangar {
 
         Plane bestPlane = new Plane();
 
+        int minVal = Integer.MAX_VALUE;
+
         for (Plane plane : this.planes) {
             if (plane != brokenPlane) {
                 if (plane.getValueFromType() >= capacity) {
-                    suitablePlanes.add(plane);
+
+                    if (plane.getValueFromType() < minVal){
+                        bestPlane = plane;
+                        minVal = plane.getValueFromType();
+                    }
+
                 }
-                bestPlane = getBestPlane(suitablePlanes);
             }
         }
 
         return bestPlane;
 
     }
-
-    public Plane getBestPlane(ArrayList<Plane> suitablePlanes) {
-        Plane bestPlane;
-        bestPlane = new Plane();
-        int minVal = Integer.MAX_VALUE;
-
-        for (Plane plane : suitablePlanes){
-            if (plane.getValueFromType() < minVal){
-                bestPlane = plane;
-                minVal = plane.getValueFromType();
-            }
-        }
-        return bestPlane;
-    }
-
-
-
 }
 
 
